@@ -16,7 +16,7 @@ namespace E_Commerce_WebApplication.Controllers
         {
 
             var objCategoryList = _dbContext.Categories.ToList();  
-            return View();
+            return View(objCategoryList);
         }
     }
 }
