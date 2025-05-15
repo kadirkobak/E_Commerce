@@ -1,4 +1,5 @@
 ﻿using E_Commerce_WebApplication.Data;
+using E_Commerce_WebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce_WebApplication.Controllers
@@ -18,9 +19,19 @@ namespace E_Commerce_WebApplication.Controllers
             var objCategoryList = _dbContext.Categories.ToList();  
             return View(objCategoryList);
         }
+       
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+        
+        [HttpPost]
+        public IActionResult Create( Category obj)
+        {
+            _dbContext.Categories.Add(obj);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
