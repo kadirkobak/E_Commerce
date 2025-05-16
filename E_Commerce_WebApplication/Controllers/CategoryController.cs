@@ -47,7 +47,7 @@ namespace E_Commerce_WebApplication.Controllers
             {
                 return NotFound();
             }
-            Category categoryFromDb = _dbContext.Categories.Find(id);
+            Category categoryFromDb = _dbContext.Categories.Find(id);   
 
             if (categoryFromDb == null)
             {
@@ -62,7 +62,7 @@ namespace E_Commerce_WebApplication.Controllers
             if (ModelState.IsValid)
             {
                 _dbContext.Categories.Update(obj);
-                _dbContext.SaveChanges();
+                _dbContext.SaveChanges();             
                 return RedirectToAction("Index");
             }
 
