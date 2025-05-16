@@ -56,18 +56,18 @@ namespace E_Commerce_WebApplication.Controllers
             return View(categoryFromDb);
         }
 
-        /*[HttpPost]
-        public IActionResult Edit(int? id)
+        [HttpPost]
+        public IActionResult Edit(Category obj)
         {
             if (ModelState.IsValid)
             {
-                _dbContext.Categories.Add(id);
+                _dbContext.Categories.Update(obj);
                 _dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View();
 
-        }*/
+        }
     }
 }
