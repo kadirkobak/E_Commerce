@@ -8,6 +8,7 @@ namespace E_Commerce_WebApplication.Controllers
     {
 
         private readonly ApplicationDbContext _dbContext;
+       
         public CategoryController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
