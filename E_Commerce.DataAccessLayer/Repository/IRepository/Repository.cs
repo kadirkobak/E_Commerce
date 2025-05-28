@@ -37,10 +37,7 @@ namespace E_Commerce.DataAccessLayer.Repository.IRepository
         {
             dbSet.Add(entity);
         }
-        public void Update(T entity)
-        {
-            throw new NotImplementedException();
-        }
+     
         public void Remove(T entity)
         {
             dbSet.Remove(entity);
