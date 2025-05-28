@@ -43,11 +43,11 @@ namespace E_Commerce.DataAccessLayer.Repository.IRepository
         }
         public void Remove(T entity)
         {
-            throw new NotImplementedException();
+            dbSet.Remove(entity);
         }
         public void RemoveRange(IEnumerable<T> entity)
         {
-            throw new NotImplementedException();
+            dbSet.RemoveRange(entity);
         }
     }
  
