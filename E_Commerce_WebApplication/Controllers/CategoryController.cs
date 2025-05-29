@@ -8,17 +8,17 @@ namespace E_Commerce_WebApplication.Controllers
     public class CategoryController : Controller
     {
 
-        private readonly IUnitOfWork _unityOfWork;
+        private readonly IUnitOfWork _unitOfWork;
        
         public CategoryController(IUnitOfWork unitOfWork)
         {
-            _unityOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
 
-            var objCategoryList = _unityOfWork.Category.GetAll().ToList();
+            var objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -33,8 +33,8 @@ namespace E_Commerce_WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unityOfWork.Category.Add(obj);
-                _unityOfWork.Save();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
@@ -50,7 +50,7 @@ namespace E_Commerce_WebApplication.Controllers
             {
                 return NotFound();
             }
-            Category categoryFromDb = _unityOfWork.Category.Get(u => u.Id == id);   
+            Category categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);   
 
             if (categoryFromDb == null)
             {
@@ -64,8 +64,8 @@ namespace E_Commerce_WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unityOfWork.Category.Update(obj);
-                _unityOfWork.Save();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
@@ -82,7 +82,7 @@ namespace E_Commerce_WebApplication.Controllers
                 return NotFound();
             }
             
-            Category categoryFromDb = _unityOfWork.Category.Get(u => u.Id == id);
+            Category categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
 
             if (categoryFromDb == null)
             {
@@ -99,15 +99,15 @@ namespace E_Commerce_WebApplication.Controllers
                 return NotFound();
             }
             
-            Category? categoryFromDb = _unityOfWork.Category.Get(u => u.Id == id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
 
             if (categoryFromDb == null)
             {
                 return NotFound();
             }
 
-            _unityOfWork.Category.Remove(categoryFromDb);
-            _unityOfWork.Save();
+            _unitOfWork.Category.Remove(categoryFromDb);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
