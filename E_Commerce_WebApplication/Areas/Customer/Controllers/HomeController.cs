@@ -2,8 +2,9 @@ using System.Diagnostics;
 using E_Commerce_WebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace E_Commerce_WebApplication.Controllers
+namespace E_Commerce_WebApplication.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

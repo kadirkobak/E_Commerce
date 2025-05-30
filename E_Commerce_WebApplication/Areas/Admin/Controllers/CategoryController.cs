@@ -3,8 +3,10 @@ using E_Commerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using E_Commerce.DataAccessLayer.Repository.IRepository;
 
-namespace E_Commerce_WebApplication.Controllers
+namespace E_Commerce_WebApplication.Areas.Admin.Controllers
 {
+
+    [Area("Admin")]
     public class CategoryController : Controller
     {
 
