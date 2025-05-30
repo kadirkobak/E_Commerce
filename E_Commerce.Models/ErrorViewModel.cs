@@ -1,4 +1,4 @@
-namespace E_Commerce_WebApplication.Models
+namespace E_Commerce.Models
 {
     public class ErrorViewModel
     {
