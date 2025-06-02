@@ -1,4 +1,5 @@
-﻿using E_Commerce_DataAccessLayer.Data;
+﻿using E_Commerce.DataAccessLayer.Repository.IRepository;
+using E_Commerce_DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.DataAccessLayer.Repository.IRepository
+namespace E_Commerce.DataAccessLayer.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -18,7 +19,7 @@ namespace E_Commerce.DataAccessLayer.Repository.IRepository
         public Repository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            this.dbSet = _dbContext.Set<T>();
+            dbSet = _dbContext.Set<T>();
         }
 
 
