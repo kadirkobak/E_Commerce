@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.DataAccessLayer.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
       
         private readonly ApplicationDbContext _dbContext;
 
-        public CategoryRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
 
 
 
-        public void Update(Category obj)
+        public void Update(Product obj)
         {
-            _dbContext.Categories.Update(obj);
+            _dbContext.Products.Update(obj);
         }
     }
 }
