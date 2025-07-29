@@ -52,13 +52,13 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Product categoryFromDb = _unitOfWork.Product.Get(u => u.Id == id);   
+            Product productFromDb = _unitOfWork.Product.Get(u => u.Id == id);   
 
-            if (categoryFromDb == null)
+            if (productFromDb == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDb);
+            return View(productFromDb);
         }
 
         [HttpPost]
@@ -84,13 +84,13 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                 return NotFound();
             }
             
-            Product categoryFromDb = _unitOfWork.Product.Get(u => u.Id == id);
+            Product productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
 
-            if (categoryFromDb == null)
+            if (productFromDb == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDb);
+            return View(productFromDb);
         }
 
         [HttpPost,ActionName("Delete")]
@@ -101,14 +101,14 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                 return NotFound();
             }
             
-            Product? categoryFromDb = _unitOfWork.Product.Get(u => u.Id == id);
+            Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
 
-            if (categoryFromDb == null)
+            if (productFromDb == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Product.Remove(categoryFromDb);
+            _unitOfWork.Product.Remove(productFromDb);
             _unitOfWork.Save();
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
