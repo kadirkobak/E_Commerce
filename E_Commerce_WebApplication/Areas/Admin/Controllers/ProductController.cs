@@ -2,6 +2,7 @@
 using E_Commerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using E_Commerce.DataAccessLayer.Repository.IRepository;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace E_Commerce_WebApplication.Areas.Admin.Controllers
 {
@@ -21,6 +22,12 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         {
 
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll()
+                .Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
             return View(objProductList);
         }
 
