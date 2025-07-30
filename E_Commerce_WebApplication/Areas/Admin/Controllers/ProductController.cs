@@ -10,7 +10,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {
-
+        // Dependency Injection of unit of work
         private readonly IUnitOfWork _unitOfWork;
        
         public ProductController(IUnitOfWork unitOfWork)
@@ -22,18 +22,22 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         {
 
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll()
-                .Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                });
+          
             return View(objProductList);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll()
+              .Select(u => new SelectListItem
+              {
+                  Text = u.Name,
+                  Value = u.Id.ToString()
+              });
+
+            ViewBag.CategoryList = CategoryList;
+
             return View();
         }
 
