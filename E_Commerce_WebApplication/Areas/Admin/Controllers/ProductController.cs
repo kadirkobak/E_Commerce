@@ -38,9 +38,9 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(Product obj) 
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) 
             {
                 _unitOfWork.Product.Add(obj);
                 _unitOfWork.Save();
@@ -67,7 +67,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             }
             return View(productFromDb);
         }
-
+        
         [HttpPost]
         public IActionResult Edit(Product obj)
         {
