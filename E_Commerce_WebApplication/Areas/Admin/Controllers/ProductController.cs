@@ -3,6 +3,7 @@ using E_Commerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using E_Commerce.DataAccessLayer.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using E_Commerce.Models.ViewModels;
 
 namespace E_Commerce_WebApplication.Areas.Admin.Controllers
 {
@@ -12,7 +13,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
     {
         // Dependency Injection of unit of work
         private readonly IUnitOfWork _unitOfWork;
-       
+
         public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -22,7 +23,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         {
 
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
-          
+
             return View(objProductList);
         }
 
@@ -39,15 +40,26 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             ViewBag.CategoryList = CategoryList;
             //ViewData["CategoryList"]= CategoryList;
 
-            return View();
+            ProductVM productVM = new ProductVM()
+            {
+                CategoryList = _unitOfWork.Category.GetAll()
+                    .Select(u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    }),
+                Product = new Product()
+            };
+
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product obj) 
+        public IActionResult Create(ProductVM obj)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(obj.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
@@ -64,7 +76,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Product productFromDb = _unitOfWork.Product.Get(u => u.Id == id);   
+            Product productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
 
             if (productFromDb == null)
             {
@@ -72,7 +84,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             }
             return View(productFromDb);
         }
-        
+
         [HttpPost]
         public IActionResult Edit(Product obj)
         {
@@ -80,8 +92,8 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             {
                 _unitOfWork.Product.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Product updated successfully"; 
-                return RedirectToAction("Index"); 
+                TempData["success"] = "Product updated successfully";
+                return RedirectToAction("Index");
             }
 
             return View();
@@ -95,7 +107,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            
+
             Product productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
 
             if (productFromDb == null)
@@ -105,14 +117,14 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             return View(productFromDb);
         }
 
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            
+
             Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
 
             if (productFromDb == null)
