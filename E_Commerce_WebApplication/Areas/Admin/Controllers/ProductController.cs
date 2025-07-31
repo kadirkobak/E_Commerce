@@ -79,8 +79,8 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             {
                 _unitOfWork.Product.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Product updated successfully";
-                return RedirectToAction("Index");
+                TempData["success"] = "Product updated successfully"; 
+                return RedirectToAction("Index"); 
             }
 
             return View();
