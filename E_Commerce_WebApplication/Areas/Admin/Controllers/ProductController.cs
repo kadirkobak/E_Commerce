@@ -28,30 +28,34 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll()
-              .Select(u => new SelectListItem
-              {
-                  Text = u.Name,
-                  Value = u.Id.ToString()
-              });
 
-            ViewBag.CategoryList = CategoryList;
-            //ViewData["CategoryList"]= CategoryList;
 
+            
+            
             ProductVM productVM = new ProductVM()
             {
                 CategoryList = _unitOfWork.Category.GetAll()
-                    .Select(u => new SelectListItem
-                    {
-                        Text = u.Name,
-                        Value = u.Id.ToString()
-                    }),
+          .Select(u => new SelectListItem
+          {
+              Text = u.Name,
+              Value = u.Id.ToString()
+          }),
                 Product = new Product()
             };
 
-            return View(productVM);
+            if(id==null)
+            {
+                return View(productVM);
+            }
+            else
+            {
+                //update
+
+            }
+
+            
         }
 
         [HttpPost]
