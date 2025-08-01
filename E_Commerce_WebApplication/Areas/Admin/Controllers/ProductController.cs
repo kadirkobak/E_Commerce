@@ -45,14 +45,15 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                 Product = new Product()
             };
 
-            if(id==null)
+            if(id==null || id==0)
             {
                 return View(productVM);
             }
             else
             {
                 //update
-
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
             }
 
             
