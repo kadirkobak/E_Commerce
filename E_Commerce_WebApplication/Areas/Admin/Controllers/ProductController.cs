@@ -67,29 +67,50 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(productVM.Product);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                }
+
+                
+                if (productVM.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(productVM.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(productVM.Product);
+                }
+
                 _unitOfWork.Save();
-                TempData["success"] = "Product created successfully";
+                TempData["success"] = "Product saved successfully";
                 return RedirectToAction("Index");
             }
             else
             {
-
                 productVM.CategoryList = _unitOfWork.Category.GetAll()
-                        .Select(u => new SelectListItem
-                        {
-                            Text = u.Name,
-                            Value = u.Id.ToString()
-                        });
+                    .Select(u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    });
 
                 return View(productVM);
             }
-
-
-
         }
 
-        
+
+
 
         [HttpGet]
         public IActionResult Delete(int? id)
