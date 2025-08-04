@@ -11,7 +11,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {
-        // Dependency Injection of unit of work
+        
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -23,7 +23,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-
+            
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
 
             return View(objProductList);
