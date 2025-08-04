@@ -11,7 +11,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {
-        
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -23,7 +23,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            
+
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
 
             return View(objProductList);
@@ -34,8 +34,8 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         {
 
 
-            
-            
+
+
             ProductVM productVM = new ProductVM()
             {
                 CategoryList = _unitOfWork.Category.GetAll()
@@ -47,7 +47,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                 Product = new Product()
             };
 
-            if(id==null || id==0)
+            if (id == null || id == 0)
             {
                 //create
                 return View(productVM);
@@ -59,7 +59,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                 return View(productVM);
             }
 
-            
+
         }
 
         [HttpPost]
@@ -74,6 +74,21 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"images\product");
 
+
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    {
+                        // eski resmi sil
+                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+
+                    }
+
+
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
@@ -82,7 +97,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                     productVM.Product.ImageUrl = @"\images\product\" + fileName;
                 }
 
-                
+
                 if (productVM.Product.Id == 0)
                 {
                     _unitOfWork.Product.Add(productVM.Product);
