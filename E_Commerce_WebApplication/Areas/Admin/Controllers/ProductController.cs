@@ -34,8 +34,6 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         {
 
 
-
-
             ProductVM productVM = new ProductVM()
             {
                 CategoryList = _unitOfWork.Category.GetAll()
