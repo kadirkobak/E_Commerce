@@ -148,7 +148,7 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
                     return Json(new { success = false, message = "Product not found" });
                 }
 
-                // Delete image if exists
+                // resmi sil
                 if (!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
                 {
                     var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath,
