@@ -123,48 +123,6 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
         }
 
 
-
-
-        [HttpGet]
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            Product productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
-
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(productFromDb);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
-
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.Product.Remove(productFromDb);
-            _unitOfWork.Save();
-            TempData["success"] = "Product deleted successfully";
-            return RedirectToAction("Index");
-        }
-
-
-
         #region API CALLS
 
         [HttpGet]
@@ -174,8 +132,8 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             return Json(new { data = objProductList });
         }
 
-        [HttpDelete]
-        public IActionResult DeleteApi(int? id)
+     
+        public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
             {
