@@ -132,33 +132,43 @@ namespace E_Commerce_WebApplication.Areas.Admin.Controllers
             return Json(new { data = objProductList });
         }
 
-     
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
+            try
             {
-                return NotFound();
+                if (id == null || id == 0)
+                {
+                    return NotFound();
+                }
+
+                var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
+                if (productToBeDeleted == null)
+                {
+                    return Json(new { success = false, message = "Product not found" });
+                }
+
+                // Delete image if exists
+                if (!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath,
+                        productToBeDeleted.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                _unitOfWork.Product.Remove(productToBeDeleted);
+                _unitOfWork.Save();
+
+                return Json(new { success = true, message = "Product deleted successfully" });
             }
-
-            var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
-
-            if (productToBeDeleted == null)
+            catch (Exception ex)
             {
-                return Json(new { success = false, message = "Error while deleting" });
+                return Json(new { success = false, message = "Error while deleting product" });
             }
-
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
-
-
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-
-
-            _unitOfWork.Product.Remove(productToBeDeleted);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Product deleted successfully" });
         }
 
         #endregion

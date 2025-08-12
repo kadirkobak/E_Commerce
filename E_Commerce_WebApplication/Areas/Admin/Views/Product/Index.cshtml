@@ -4,15 +4,14 @@
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Create Product</h2>
-
+                <h2 class="text-white py-2">Product List</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
         <div class="row pt-4 pb-3">
             <div class="col-6">
-                <h2>Product List</h2>
+                <h2 class="text-primary">Product List</h2>
             </div>
             <div class="col-6 text-end">
                 <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
@@ -21,9 +20,7 @@
             </div>
         </div>
 
-
         <table id="tblData" class="table table-bordered table-striped" style="width:100%">
-
             <thead>
                 <tr>
                     <th>Title</th>
@@ -31,22 +28,24 @@
                     <th>Price</th>
                     <th>Author</th>
                     <th>Category</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
 
-
 @section Scripts {
     <script src="~/js/product.js"></script>
 }
-
 
 <style>
     .table-bordered td,
     .table-bordered th {
         border: 0.5px solid #ccc;
+    }
+
+    .btn-group {
+        white-space: nowrap;
     }
 </style>
