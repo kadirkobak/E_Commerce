@@ -33,4 +33,6 @@
     <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://www.schemastore.org/asmdef.json" /></VisualStudio></ProjectExtensions>
+
 </Project>
