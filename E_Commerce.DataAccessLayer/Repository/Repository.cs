@@ -66,6 +66,8 @@ namespace E_Commerce.DataAccessLayer.Repository
         {
             dbSet.RemoveRange(entity);
         }
+
+        
     }
 
 
